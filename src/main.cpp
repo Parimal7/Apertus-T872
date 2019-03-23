@@ -9,7 +9,6 @@ int main(int argc, char const *argv[])
       return -1;
     }
     
-    // Declare variables.
     string fileName = argv[1];
 
     Debayer image(fileName);
