@@ -1,15 +1,14 @@
 #include "Debayer.hpp"
 #include "BMP.hpp"
-using namespace std;
 
-Debayer::Debayer(string fileName)
+Debayer::Debayer(std::string fileName)
 {
     this->fileName = fileName;
 }
 
 void Debayer::LoadFile()
 {
-    ifstream rawFile(fileName, ifstream::binary);
+    std::ifstream rawFile(fileName, std::ifstream::binary);
     rawFile.read(reinterpret_cast<char*>(buffer12Bits), IMAGE_SIZE * 3 / 2);
     rawFile.close();
 }
@@ -51,32 +50,32 @@ void Debayer::GetIntensity(uint8_t * channel)
 {
     for (int index = 0; index < 5; index++)
     {
-        cout << hex << unsigned(channel[4096 * index + 0]) << " ";
-        cout << hex << unsigned(channel[4096 * index + 1])<< " ";
-        cout << hex << unsigned(channel[4096 * index + 2])<< " ";
-        cout << hex << unsigned(channel[4096 * index + 3])<< " ";
-        cout << hex << unsigned(channel[4096 * index + 4])<< " ";
-        cout << endl;
+        std::cout << std::hex << unsigned(channel[4096 * index + 0]) << " ";
+        std::cout << std::hex << unsigned(channel[4096 * index + 1])<< " ";
+        std::cout << std::hex << unsigned(channel[4096 * index + 2])<< " ";
+        std::cout << std::hex << unsigned(channel[4096 * index + 3])<< " ";
+        std::cout << std::hex << unsigned(channel[4096 * index + 4])<< " ";
+        std::cout << std::endl;
     }
      
-    cout << endl;
+    std::cout << std::endl;
 }
 
 void Debayer::PrintIntensity()
 {
-    cout << "Intensity values for 5 x 5 redChannel is \n";
+    std::cout << "Intensity values for 5 x 5 redChannel is \n";
     GetIntensity(redChannel);
-    cout << "Intensity values for 5 x 5 green0Channel is \n";
+    std::cout << "Intensity values for 5 x 5 green0Channel is \n";
     GetIntensity(green0Channel);
-    cout << "Intensity values for 5 x 5 green1Channel is \n";
+    std::cout << "Intensity values for 5 x 5 green1Channel is \n";
     GetIntensity(green1Channel);
-    cout << "Intensity values for 5 x 5 blueChannel is \n";
+    std::cout << "Intensity values for 5 x 5 blueChannel is \n";
     GetIntensity(blueChannel);
 }
 
-void Debayer::ChannelToPPM(uint8_t * channel, string fileName)
+void Debayer::ChannelToPPM(uint8_t * channel, std::string fileName)
 {
-    ofstream outfile(fileName);
+    std::ofstream outfile(fileName);
 
     if(fileName == "color.ppm")
     {
