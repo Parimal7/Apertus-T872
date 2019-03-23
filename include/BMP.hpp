@@ -13,7 +13,7 @@ public:
     BMPColorHeader bmpColorHeader;
     std::vector<uint8_t> data;
 
-    BMP(uint32_t width, uint32_t height);
+    BMP(int32_t width, int32_t height);
 
     void WriteHeadersAndData(const char *fname);
 };
