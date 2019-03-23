@@ -26,8 +26,7 @@ Additional task(for [T763](https://lab.apertus.org/T763))-
 
 1) `git clone https://github.com/Parimal7/Apertus-T872.git`
 2) `cd Apertus-T872`
-3) `mkdir build` 
-4) `cd build`
+3) `mkdir build && cd build` 
 5) `cmake ..`
 6) `make`
 7) `./RAWtoPPM ../test.raw12`
