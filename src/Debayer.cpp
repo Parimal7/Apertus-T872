@@ -96,26 +96,26 @@ void Debayer::ChannelToPPM(uint8_t * channel, std::string fileName)
     else
     {
         outfile << "P3" << "\n" << WIDTH / 2 << " " << HEIGHT/2 << "\n" << 255 << "\n";
-        for(long long index = 0; index < QUARTER_SIZE; ++index)
+        for (long long index = 0; index < QUARTER_SIZE; ++index)
         {
             int c = channel[index];
-            if( index % WIDTH/2 == 0 && index > 0)
+            if (index % WIDTH / 2 == 0 && index > 0)
             {
                 outfile << "\n";
             }
-            if(fileName == "red.ppm")
+            if (fileName == "red.ppm")
             {
                 outfile << c << " " << 0 << " " << 0 << " ";
             }
-            if(fileName == "green0.ppm")
+            if (fileName == "green0.ppm")
             {
                 outfile << 0 << " " << c << " " << 0 << " ";
             }
-            if(fileName == "green1.ppm")
+            if (fileName == "green1.ppm")
             {
                 outfile << 0 << " " << c << " " << 0 << " ";
             }
-            if(fileName == "blue.ppm")
+            if (fileName == "blue.ppm")
             {
                 outfile << 0 << " " << 0 << " " << c << " ";
             }
@@ -163,7 +163,7 @@ void Debayer::ConvertToBMP()
 {
     BMP bmp1(WIDTH, HEIGHT);
     bmp1.data.resize(3 * IMAGE_SIZE);
-    for(long long index = 0; index < 3 * IMAGE_SIZE; index = index + 3)
+    for (long long index = 0; index < 3 * IMAGE_SIZE; index = index + 3)
     {
         long long currentRow = index / (3 * WIDTH);
         uint8_t R = colorChannel[(HEIGHT - currentRow - 1) * (3 * WIDTH) + (index % (3 * WIDTH))];
