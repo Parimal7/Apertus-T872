@@ -10,7 +10,6 @@ struct BMPMagicNumber
 
 struct BMPFileHeader 
 {
-
     uint32_t fileSize = 0;
     uint16_t reserved1 = 0;
     uint16_t reserved2 = 0;
