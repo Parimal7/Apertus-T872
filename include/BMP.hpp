@@ -2,13 +2,14 @@
 #define BMP_H
 
 #include "BMP_Headers.hpp"
+
 #include "Debayer.hpp"
 
 #include <string>
 
 class BMP 
 {
-	BMPMagicNumber bmpMagicNumber;
+    BMPMagicNumber bmpMagicNumber;
     BMPFileHeader fileHeader;
     BMPInfoHeader bmpInfoHeader;
     BMPColorHeader bmpColorHeader;
