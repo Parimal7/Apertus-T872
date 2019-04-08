@@ -1,4 +1,5 @@
 #include "Debayer.hpp"
+
 #include "BMP.hpp"
 
 Debayer::Debayer(std::string fileName)
@@ -15,8 +16,9 @@ void Debayer::LoadFile()
 
 void Debayer::ConvertTo8Bits()
 {
-    int j = 0; 
-    for (long long index = 0; index < IMAGE_SIZE * 3 / 2; index += 3)
+    int j = 0;
+    uint32_t bufferSize = IMAGE_SIZE * 3 / 2;
+    for (long long index = 0; index < bufferSize; index += 3)
     {
         buffer8Bits[j]   = buffer12Bits[index];
         buffer8Bits[j+1] = ((buffer12Bits[index+1] & 0x0F) << 4) | (buffer12Bits[index+2] >> 4);
@@ -96,26 +98,26 @@ void Debayer::ChannelToPPM(uint8_t * channel, std::string fileName)
     else
     {
         outfile << "P3" << "\n" << WIDTH / 2 << " " << HEIGHT/2 << "\n" << 255 << "\n";
-        for (long long index = 0; index < QUARTER_SIZE; ++index)
+        for(long long index = 0; index < QUARTER_SIZE; ++index)
         {
             int c = channel[index];
-            if (index % WIDTH / 2 == 0 && index > 0)
+            if( index % WIDTH/2 == 0 && index > 0)
             {
                 outfile << "\n";
             }
-            if (fileName == "red.ppm")
+            if(fileName == "red.ppm")
             {
                 outfile << c << " " << 0 << " " << 0 << " ";
             }
-            if (fileName == "green0.ppm")
+            if(fileName == "green0.ppm")
             {
                 outfile << 0 << " " << c << " " << 0 << " ";
             }
-            if (fileName == "green1.ppm")
+            if(fileName == "green1.ppm")
             {
                 outfile << 0 << " " << c << " " << 0 << " ";
             }
-            if (fileName == "blue.ppm")
+            if(fileName == "blue.ppm")
             {
                 outfile << 0 << " " << 0 << " " << c << " ";
             }
@@ -161,17 +163,7 @@ void Debayer::DebayerImage()
 
 void Debayer::ConvertToBMP()
 {
-    BMP bmp1(WIDTH, HEIGHT);
-    bmp1.data.resize(3 * IMAGE_SIZE);
-    for (long long index = 0; index < 3 * IMAGE_SIZE; index = index + 3)
-    {
-        long long currentRow = index / (3 * WIDTH);
-        uint8_t R = colorChannel[(HEIGHT - currentRow - 1) * (3 * WIDTH) + (index % (3 * WIDTH))];
-        uint8_t G = colorChannel[(HEIGHT - currentRow - 1) * (3 * WIDTH) + (index % (3 * WIDTH)) + 1];
-        uint8_t B = colorChannel[(HEIGHT - currentRow - 1) * (3 * WIDTH) + (index % (3 * WIDTH)) + 2];
-        bmp1.data[index] = B;
-        bmp1.data[index + 1] = G;
-        bmp1.data[index + 2] = R; 
-    }
-    bmp1.WriteHeadersAndData("color.bmp");
+    BMP bmp1(WIDTH,HEIGHT);
+    bmp1.GetData(colorChannel);
+    bmp1.WriteToFile("color.bmp");
 }

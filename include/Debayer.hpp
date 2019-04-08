@@ -45,6 +45,8 @@ public:
     void DebayerImage();
 
     void ConvertToBMP();
+
+    void FreeUpSpace();
 };
 
 #endif

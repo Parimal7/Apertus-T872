@@ -2,20 +2,22 @@
 #define BMP_H
 
 #include "BMP_Headers.hpp"
-#include <vector>
+#include "Debayer.hpp"
+
+#include <string>
 
 class BMP 
 {
-public:
-
     BMPFileHeader fileHeader;
     BMPInfoHeader bmpInfoHeader;
     BMPColorHeader bmpColorHeader;
-    std::vector<uint8_t> data;
+    uint8_t * data = new uint8_t[3 * IMAGE_SIZE];
 
-    BMP(int32_t width, int32_t height);
+public:
 
-    void WriteHeadersAndData(const char *fname);
+    BMP(uint32_t width, uint32_t height);
+    void GetData(uint8_t * channel);
+    void WriteToFile(std::string fileName);
 };
 
 #endif

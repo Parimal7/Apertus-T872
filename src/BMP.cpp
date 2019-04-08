@@ -1,22 +1,36 @@
-#include <fstream>
-#include <vector>
 #include "BMP.hpp"
 
-BMP::BMP(int32_t width, int32_t height) 
+#include <fstream>
+
+BMP::BMP(uint32_t width, uint32_t height) 
 {
     bmpInfoHeader.width = width;
     bmpInfoHeader.height = height;
-    bmpInfoHeader.size = sizeof(BMPInfoHeader);
-    fileHeader.offsetData = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader);
+    bmpInfoHeader.size = sizeof(bmpInfoHeader);
+    fileHeader.offsetData = sizeof(bmpInfoHeader) + sizeof(fileHeader);
     bmpInfoHeader.bitCount = 24;
     bmpInfoHeader.compression = 0;
-    fileHeader.fileSize = fileHeader.offsetData + data.size() + bmpInfoHeader.height;
+    fileHeader.fileSize = fileHeader.offsetData + 3 * IMAGE_SIZE + bmpInfoHeader.height;
 }
 
-void BMP::WriteHeadersAndData(const char *fname) 
+void BMP::GetData(uint8_t * channel)
 {
-    std::ofstream of{ fname, std::ios_base::binary };
+    for(long long index = 0; index < 3 * IMAGE_SIZE; index = index + 3)
+    {
+        long long currentRow = index / (3 * WIDTH);
+        uint8_t R = channel[(HEIGHT - currentRow - 1) * (3 * WIDTH) + (index % (3 * WIDTH))];
+        uint8_t G = channel[(HEIGHT - currentRow - 1) * (3 * WIDTH) + (index % (3 * WIDTH)) + 1];
+        uint8_t B = channel[(HEIGHT - currentRow - 1) * (3 * WIDTH) + (index % (3 * WIDTH)) + 2];
+        data[index] = B;
+        data[index + 1] = G;
+        data[index + 2] = R; 
+    }
+}
+
+void BMP::WriteToFile(std::string fileName) 
+{
+    std::ofstream of{ fileName, std::ios_base::binary };
     of.write((const char*)&fileHeader, sizeof(fileHeader));
     of.write((const char*)&bmpInfoHeader, sizeof(bmpInfoHeader));
-    of.write((const char*)data.data(), data.size());
+    of.write(reinterpret_cast<const char*>(data), 3 * IMAGE_SIZE);
 }
