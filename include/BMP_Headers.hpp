@@ -3,11 +3,14 @@
 
 #include <cstdint>
 
-#pragma pack(push, 1)
+struct BMPMagicNumber
+{
+    unsigned char magic[2];
+};
 
 struct BMPFileHeader 
 {
-    uint16_t fileType =  0x4D42;
+
     uint32_t fileSize = 0;
     uint16_t reserved1 = 0;
     uint16_t reserved2 = 0;
@@ -38,7 +41,5 @@ struct BMPColorHeader
     uint32_t colorSpaceType = 0x73524742;
     uint32_t unused[16] = { 0 };
 };
-
-#pragma pack(pop)
 
 #endif

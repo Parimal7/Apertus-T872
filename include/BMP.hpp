@@ -8,6 +8,7 @@
 
 class BMP 
 {
+	BMPMagicNumber bmpMagicNumber;
     BMPFileHeader fileHeader;
     BMPInfoHeader bmpInfoHeader;
     BMPColorHeader bmpColorHeader;
