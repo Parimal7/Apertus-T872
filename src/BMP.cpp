@@ -15,6 +15,11 @@ BMP::BMP(uint32_t width, uint32_t height)
     fileHeader.fileSize = fileHeader.offsetData + 3 * IMAGE_SIZE + bmpInfoHeader.height;
 }
 
+BMP::~BMP()
+{
+    delete[] data;
+}
+
 void BMP::GetData(uint8_t * channel)
 {
     for(long long index = 0; index < 3 * IMAGE_SIZE; index = index + 3)
