@@ -7,6 +7,16 @@ Debayer::Debayer(std::string fileName)
     this->fileName = fileName;
 }
 
+Debayer::~Debayer()
+{
+    delete[] buffer12Bits;
+    delete[] buffer8Bits;
+    delete[] redChannel;
+    delete[] green0Channel;
+    delete[] green1Channel;
+    delete[] colorChannel;
+}
+
 void Debayer::LoadFile()
 {
     std::ifstream rawFile(fileName, std::ifstream::binary);
