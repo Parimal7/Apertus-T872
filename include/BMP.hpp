@@ -18,6 +18,7 @@ class BMP
 public:
 
     BMP(uint32_t width, uint32_t height);
+    ~BMP();
     void GetData(uint8_t * channel);
     void WriteToFile(std::string fileName);
 };
