@@ -27,6 +27,8 @@ class Debayer
 public:
 
     Debayer(std::string fileName);
+    
+    ~Debayer();
 
     void LoadFile();
 
