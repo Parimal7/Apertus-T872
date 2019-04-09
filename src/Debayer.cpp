@@ -34,8 +34,6 @@ void Debayer::ConvertTo8Bits()
         buffer8Bits[j+1] = ((buffer12Bits[index+1] & 0x0F) << 4) | (buffer12Bits[index+2] >> 4);
         j+=2;
     }
-
-    delete[] buffer12Bits;
 }
 
 void Debayer::ExtractChannels()
